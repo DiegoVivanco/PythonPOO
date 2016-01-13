@@ -65,7 +65,7 @@ class Fecha:
 
 	def imprimirFecha(self):
 		"""escribe la fecha en el formato dia-mes-año en consola. Se mostrará el nombre del mes, no el número."""
-		print (self.getDia(),"-",self.__mesLetra(),"-",self.getAnyo())
+		print ('%s-%s-%s' % (self.getDia(),self.__mesLetra(),self.getAnyo()))
 
 
 

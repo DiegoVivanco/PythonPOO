@@ -6,14 +6,6 @@ class CuentaCorriente:
     de un cliente, e interactuar con ellos."""
 
     # Inicializador con sus atributos o propiedades establecidas
-    def __init__(self):
-        """inicializa una Cuenta Corriente con nombre, apellido, direccion, telefono, nif y saldo."""
-        self.nombre = ""
-        self.apellido = ""
-        self.direccion = ""
-        self.telefono = ""
-        self.nif = NIF()
-        self.saldo = float
 
     def __init__(self, nombre="", apellido="",direccion="", telefono="",nif="", saldo=0.0):
         """inicializa una Cuenta Corriente con nombre, apellido, direccion, telefono,
@@ -22,7 +14,7 @@ class CuentaCorriente:
         self.apellido = apellido
         self.direccion = direccion
         self.telefono = telefono
-        self.nif = NIF(cadena=nif)
+        self.nif = Dni()
         self.saldo = saldo
 
     # Utilización de setters and getters. Estos métodos especiales sirven para el manejo de las propiedades más importantes del objeto
@@ -52,17 +44,11 @@ class CuentaCorriente:
     def getTelefono(self):
         return self.telefono
 
-    def setNif(self, cadena):
-        self.nif.setNif(cadena)
+    def setNif(self, nif):
+        self.nif = nif
 
     def getNif(self):
-        return self.nif.getNif()
-
-    def getNifSano(self):
-        return self.nif.getSano()
-
-    def setNifSano(self, sano):
-        self.nif.setSano(self, sano)
+        return self.nif
 
     def setSaldo(self, saldo):
         self.saldo = saldo
@@ -107,33 +93,26 @@ class CuentaCorriente:
 
 
 
-class NIF(Dni):
-
-    def __init__(self, cadena=""):
-        Dni.__init__(self, cadena)
-
-    def setNif(self, cadena=""):
-        self.setDni(cadena)
-
-    def getNif(self):
-        self.getDni()
-
-    def getSano(self):
-        return self.sano
-
-    def checkNif(self):
-        self.checkDni()
-
-
+# Casos Test
 if __name__ == '__main__':
 
+#Casos Test sobre los set y get de las propiedades de la clase
+   
     cuenta = CuentaCorriente()
-    cuenta.setNif("45610975C")
-    print ("Tu DNI es:", cuenta.getNif())
-    cuenta.checkNif()
-    print ("Se ha verificado que el DNI es:",cuenta.getNifSano())
+    test = [[cuenta.getNombre(), ""],
+    [cuenta.getApellido(), ""],
+    [cuenta.getDireccion(), ""],
+    #[cuenta.getNif, ""],
+    [cuenta.getTelefono(), ""],
+    [cuenta.getSaldo(), 0.0]]
 
-    print ("\n\n")
+    print ("Casos Test sobre los set y get de las propiedades de la clase")
+    for miniTest in test:
+        if miniTest[0] == miniTest[1]:
+            print ('ok test correcto')
+        else:
+            print ('fail test')
+
 
     cuenta.setNombre("Diego")
     cuenta.setApellido("Vivanco")
@@ -141,10 +120,68 @@ if __name__ == '__main__':
     cuenta.setDireccion("Calle de la begonia")
     cuenta.setTelefono("59568456")
     cuenta.setSaldo(1200)
-    cuenta.consultarCuenta()
+
+    print ("Casos Test sobre los set y get de las propiedades de la clase")    
+    test = [[cuenta.getNombre(), "Diego"],
+    [cuenta.getApellido(), "Vivanco"],
+    [cuenta.getNif(), "45610975C"],
+    [cuenta.getDireccion(), "Calle de la begonia"],
+    [cuenta.getTelefono(), "59568456"],
+    [cuenta.getSaldo(), 1200]]
+    for miniTest in test:
+        if miniTest[0] == miniTest[1]:
+            print ('ok test correcto')
+        else:
+            print ('fail test')
 
     print ("\n")
 
+###########################################################################################
+
+#Casos Test retirarDinero()
+        
+    print ("Caso Test retirarDinero()")
+    cuenta.setSaldo(100)
+    cuenta.ingresarDinero(100)
+    if cuenta.getSaldo() == 200:
+        print ("ok test correcto")
+    else:
+        print ("fail test")
+
+#Casos Test ingresarDinero()
+    
+    print ("Caso Test ingresarDinero()")
+    cuenta.retirarDinero(100)
+    if cuenta.getSaldo() == 100:
+        print ("ok test correcto")
+    else:
+        print ("fail test")
+
+    print ("\n")
+
+###########################################################################################
+
+#Casos Test saldoNegativo()
+    print ("Caso Test saldoNegativo()")
+    tuCuenta=CuentaCorriente()
+    tuCuenta.setSaldo(100)
+    cuenta.setSaldo(0)
+    cuenta.retirarDinero(100)
+    test = [[cuenta.saldoNegativo(), False],
+    [tuCuenta.saldoNegativo(), True]]
+    for miniTest in test:
+        if miniTest[0]== miniTest[1]:
+            print('ok test saldoNegativo')
+        else:
+            print('fail test saldoNegativo')
+
+    print ("\n")
+
+###########################################################################################
+
+#Ejemplo de uso de la Clase CuentaCorriente
+    cuenta.setSaldo(1200)
+    cuenta.consultarCuenta()
     cantidadRetirada, dineroRestante = cuenta.retirarDinero(120)
     cantidadIngresada, dineroTotal = cuenta.ingresarDinero(180)
 
